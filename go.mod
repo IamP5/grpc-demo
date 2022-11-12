@@ -1,4 +1,4 @@
-module github.com/devfullcycle/13-GraphQL
+module github.com/IamP5/grpc-demo
 
 go 1.19
 

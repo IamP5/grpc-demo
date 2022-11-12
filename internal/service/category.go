@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"github.com/devfullcycle/13-GraphQL/internal/database"
-	"github.com/devfullcycle/13-GraphQL/internal/pb"
+	"github.com/IamP5/grpc-demo/internal/database"
+	"github.com/IamP5/grpc-demo/internal/pb"
 )
 
 type CategoryService struct {
@@ -11,7 +11,7 @@ type CategoryService struct {
 	CategoryDB database.Category
 }
 
-func newCategoryService(categoryDB database.Category) *CategoryService {
+func NewCategoryService(categoryDB database.Category) *CategoryService {
 	return &CategoryService{
 		CategoryDB: categoryDB,
 	}
