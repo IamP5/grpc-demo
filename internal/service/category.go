@@ -18,12 +18,50 @@ func NewCategoryService(categoryDB database.Category) *CategoryService {
 }
 
 func (c *CategoryService) CreateCategory(ctx context.Context, request *pb.CreateCategoryRequest) (*pb.CategoryResponse, error) {
-	category, error := c.CategoryDB.Create(request.Name, request.Description)
-	if error != nil {
-		return nil, error
+	category, err := c.CategoryDB.Create(request.Name, request.Description)
+	if err != nil {
+		return nil, err
 	}
 
 	categoryResponse := &pb.Category{
+		Id:          category.ID,
+		Name:        category.Name,
+		Description: category.Description,
+	}
+
+	return &pb.CategoryResponse{
+		Category: categoryResponse,
+	}, nil
+}
+
+func (c *CategoryService) ListCategories(ctx context.Context, request *pb.Blank) (*pb.CategoryList, error) {
+	categories, err := c.CategoryDB.FindAll()
+	if err != nil {
+		return nil, err
+	}
+
+	var categoriesResponse []*pb.Category
+
+	for _, category := range categories {
+		categoryResponse := &pb.Category{
+			Id:          category.ID,
+			Name:        category.Name,
+			Description: category.Description,
+		}
+
+		categoriesResponse = append(categoriesResponse, categoryResponse)
+	}
+
+	return &pb.CategoryList{Categories: categoriesResponse}, nil
+}
+
+func (c *CategoryService) GetCategory(ctx context.Context, request *pb.CategoryGetRequest) (*pb.CategoryResponse, error) {
+	category, err := c.CategoryDB.FindById(request.Id)
+	if err != nil {
+		return nil, err
+	}
+
+	var categoryResponse = &pb.Category{
 		Id:          category.ID,
 		Name:        category.Name,
 		Description: category.Description,
