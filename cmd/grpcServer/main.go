@@ -5,6 +5,7 @@ import (
 	"github.com/IamP5/grpc-demo/internal/database"
 	"github.com/IamP5/grpc-demo/internal/pb"
 	"github.com/IamP5/grpc-demo/internal/service"
+	_ "github.com/mattn/go-sqlite3"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"net"
